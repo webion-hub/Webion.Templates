@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Webion.Templates.Firestore\Webion.Templates.Firestore.csproj" />
+    <ProjectReference Include="..\Webion.Templates.Infrastructure\Webion.Templates.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
