@@ -1,3 +1,4 @@
+using Webion.Templates.Api.Mappings;
 using Webion.Templates.Core.Data;
 using Webion.Templates.Firestore.Context;
 using Webion.Templates.Infrastructure.Abstractions;
@@ -17,7 +18,7 @@ internal sealed class TemplatesRepository : ITemplatesRepository
     {
         return await _firestore.Templates
             .StreamAsync(cancellationToken)
-            .Select(t => t.GetValue(t => t.Name))
+            .Select(t => t.ToDbo().Name)
             .ToListAsync(cancellationToken);
     }
 
@@ -42,10 +43,6 @@ internal sealed class TemplatesRepository : ITemplatesRepository
         if(found is null)
             return null;
 
-        return new TemplateDbo 
-        {
-            Name = found.GetValue(t => t.Name),
-            Template = found.GetValue(t => t.Template)
-        };
+        return found.ToDbo();
     }
 }

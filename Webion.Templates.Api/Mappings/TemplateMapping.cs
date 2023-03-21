@@ -1,3 +1,4 @@
+using Webion.Firestore.Extensions;
 using Webion.Templates.Api.Model;
 using Webion.Templates.Core.Data;
 
@@ -22,4 +23,10 @@ public static class TemplateMapping
             Template = template.Template,
         };
     }
+
+    public static TemplateDbo ToDbo(this TypedDocumentSnapshot<TemplateDbo> doc) => new()
+    {
+        Name = doc.GetValue(d => d.Name),
+        Template = doc.GetValue(d => d.Template)
+    };
 }
