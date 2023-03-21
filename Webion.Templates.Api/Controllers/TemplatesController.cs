@@ -1,18 +1,16 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Webion.Templates.Infrastructure.Abstractions;
+using Webion.Templates.Api.Model;
+using Webion.Templates.Api.Mappings;
 
 namespace Kaire.Templates.Api.Controllers;
 
-[Route("templates/{Template}")]
+[Route("templates")]
 [ApiController]
 public class TemplatesController : ControllerBase
 {
     private readonly ITemplatesRepository _templates;
-
-    [FromRoute]
-    public string Template { get; init; } = null!;
 
     public TemplatesController(ITemplatesRepository templates)
     {
@@ -20,11 +18,27 @@ public class TemplatesController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet]
-    [ProducesResponseType(typeof(bool), 200)]
-    public async Task<IActionResult> FindByNameAsync(CancellationToken cancellationToken)
+    [HttpPost]
+    [ProducesResponseType(typeof(TemplateModel), 200)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] TemplateModel template,
+        CancellationToken cancellationToken
+    )
     {
-        return Ok(await _templates.FindByNameAsync(Template, cancellationToken));
-        
+        var created = await _templates.CreateAsync(template.ToDbo(), cancellationToken);
+
+        if(created is null)
+            return BadRequest();
+
+        return Ok(created.ToModel());
+    }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [ProducesResponseType(typeof(List<string>), 200)]
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return Ok(await _templates.AllAsync(cancellationToken));
     }
 }

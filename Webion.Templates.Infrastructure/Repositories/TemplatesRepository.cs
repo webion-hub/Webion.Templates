@@ -1,9 +1,6 @@
-using System.Security.Cryptography;
-using System.Text;
 using Webion.Templates.Core.Data;
 using Webion.Templates.Firestore.Context;
 using Webion.Templates.Infrastructure.Abstractions;
-using Webion.Firestore.Extensions;
 
 namespace Webion.Templates.Infrastructure.Repositories;
 
@@ -14,6 +11,25 @@ internal sealed class TemplatesRepository : ITemplatesRepository
     public TemplatesRepository(TemplatesFirestoreDbContext firestore)
     {
         _firestore = firestore;
+    }
+
+    public async Task<List<string>> AllAsync(CancellationToken cancellationToken) 
+    {
+        return await _firestore.Templates
+            .StreamAsync(cancellationToken)
+            .Select(t => t.GetValue(t => t.Name))
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<TemplateDbo> CreateAsync(TemplateDbo template, CancellationToken cancellationToken)
+    {
+        var existing = await FindByNameAsync(template.Name, cancellationToken);
+        if(existing is not null)
+            return null!;
+
+        var created = await _firestore.Templates.AddAsync(template, cancellationToken);
+        
+        return template;
     }
 
     public async Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken)
