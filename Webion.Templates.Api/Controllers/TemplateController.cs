@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Webion.Templates.Api.Mappings;
+using Webion.Templates.Api.Model;
 using Webion.Templates.Infrastructure.Abstractions;
 using Webion.Templates.Mustache.Abstractions;
 
@@ -26,20 +28,36 @@ public class TemplateController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(typeof(TemplateModel), 200)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> FindByNameAsync(CancellationToken cancellationToken)
     {
         var template = await _templates.FindByNameAsync(Template, cancellationToken);
 
         if(template is null)
+            return NotFound(null);
+
+        return Ok(template.ToModel());
+    }
+
+    [AllowAnonymous]
+    [HttpDelete]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> DeleteAsync(CancellationToken cancellationToken)
+    {
+        var deleted = await _templates.DeleteAsync(Template, cancellationToken);
+
+        if(!deleted)
             return NotFound();
 
-        return Ok(template);
+        return Ok();
     }
 
     [AllowAnonymous]
     [HttpPost]
-    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(typeof(string), 200)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> ProcessTemplateAsync(
         [FromBody] string view,
         CancellationToken cancellationToken

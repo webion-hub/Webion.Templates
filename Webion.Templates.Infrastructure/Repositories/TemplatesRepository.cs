@@ -33,6 +33,19 @@ internal sealed class TemplatesRepository : ITemplatesRepository
         return template;
     }
 
+    public async Task<bool> DeleteAsync(string name, CancellationToken cancellationToken)
+    {
+        var found = await _firestore.Templates
+            .WhereEqualTo(a => a.Name, name)
+            .StreamAsync(cancellationToken)
+            .FirstOrDefaultAsync(cancellationToken) ?? null;
+        
+        if(found is null)
+            return false;
+        
+        return await found.DeleteAsync(cancellationToken);
+    }
+
     public async Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken)
     {
         var found = await _firestore.Templates
