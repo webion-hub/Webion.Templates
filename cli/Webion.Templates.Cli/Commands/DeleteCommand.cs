@@ -26,24 +26,22 @@ internal sealed class DeleteCommand : InteractiveCommand
 
         public override async Task<int> InvokeAsync(InvocationContext context)
         {
-            if (!YesNoPrompt.AcceptInteractive("Are you sure you want to delete the template?", Yes))
+            if (!YesNoPrompt.AskConfirmation("Are you sure you want to delete the template?", Yes))
                 return 0;
                 
-            var deleted = await AnsiConsole.Status()
-                .Spinner(Spinner.Known.Arc)
-                .StartAsync("Fetching...", async ctx =>
-                {
-                    return await _client.RemoveAsync(Name, context.GetCancellationToken());
-                });
-
-            if(!deleted)
+            return await AnsiConsole.Status().Spinner(Spinner.Known.Arc).StartAsync("Deleting Template...", async ctx =>
             {
-                AnsiConsole.MarkupLine("[red]Not found[/]");
-                return 1;
-            }
+                var deleted = await _client.RemoveAsync(Name, context.GetCancellationToken());
 
-            AnsiConsole.MarkupLine("[blue]Deleted[/]");
-            return 0;
+                if(!deleted)
+                {
+                    AnsiConsole.MarkupLine("[red]Not found[/]");
+                    return 1;
+                }
+
+                AnsiConsole.MarkupLine("[blue]Deleted[/]");
+                return 0;
+            });
         }
     }
 }

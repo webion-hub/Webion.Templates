@@ -25,7 +25,7 @@ public sealed class YesNoPrompt : IPrompt<bool>
         return _prompt.ShowAsync(console, cancellationToken);
     }
 
-    public static bool AcceptInteractive(string title, bool skip)
+    public static bool AskConfirmation(string title, bool skip)
     {
         if (skip)
             return true;

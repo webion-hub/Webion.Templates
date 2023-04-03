@@ -24,27 +24,25 @@ internal sealed class ShowCommand : Command
 
         public override async Task<int> InvokeAsync(InvocationContext context)
         {
-            var template = await AnsiConsole.Status()
-                .Spinner(Spinner.Known.Arc)
-                .StartAsync("Fetching...", async ctx =>
-                {
-                    return await _client.FindByNameAsync(Name, context.GetCancellationToken());
-                });
-                
-            if(template?.Template is null)
+            return await AnsiConsole.Status().Spinner(Spinner.Known.Arc).StartAsync("Fetching...", async ctx =>
             {
-                AnsiConsole.MarkupLine("[red]Not found[/]");
+                var template = await _client.FindByNameAsync(Name, context.GetCancellationToken());
+                
+                if(template?.Template is null)
+                {
+                    AnsiConsole.MarkupLine("[red]Not found[/]");
+                    return 0;
+                }
+
+                var table = new Table();
+                table.AddColumn("Name");
+                table.AddColumn("Template");
+
+                table.AddRow(Name, template.Template);
+
+                AnsiConsole.Write(table);
                 return 0;
-            }
-
-            var table = new Table();
-            table.AddColumn("Name");
-            table.AddColumn("Template");
-
-            table.AddRow(Name, template.Template);
-
-            AnsiConsole.Write(table);
-            return 0;
+            });
         }
     }
 }

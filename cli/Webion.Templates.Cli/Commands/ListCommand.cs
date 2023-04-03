@@ -22,23 +22,20 @@ internal sealed class ListCommand : Command
 
         public override async Task<int> InvokeAsync(InvocationContext context)
         {
-            var templates = await AnsiConsole
-                .Status()
-                .Spinner(Spinner.Known.Arc)
-                .StartAsync("Fetching...", async ctx =>
-                {
-                    return await _client.GetAllAsync(context.GetCancellationToken());
-                });
+            return await AnsiConsole.Status().Spinner(Spinner.Known.Arc).StartAsync("Fetching...", async ctx =>
+            {
+                var templates = await _client.GetAllAsync(context.GetCancellationToken());
 
-            var table = new Table();
-            table.AddColumn("Templates");
+                var table = new Table();
+                table.AddColumn("Templates");
 
-            foreach (var template in templates)
-                table.AddRow(template);
+                foreach (var template in templates)
+                    table.AddRow(template);
 
-            AnsiConsole.Write(table);
+                AnsiConsole.Write(table);
 
-            return 0;
+                return 0;
+            });
         }
     }
 }

@@ -26,44 +26,45 @@ internal sealed class AddCommand : System.CommandLine.Command
 
         public override async Task<int> InvokeAsync(InvocationContext context)
         {
-            var file = $"/tmp/{Guid.NewGuid()}.html";
-            await CliWrap.Cli.Wrap($"code")
-                .WithArguments($"-n -w {file}")
-                .ExecuteAsync(context.GetCancellationToken());
-
-            var result = await CliWrap.Cli.Wrap($"cat")
-                .WithArguments($"{file}")
-                .ExecuteBufferedAsync(context.GetCancellationToken());
-
-            var created = await AnsiConsole.Status()
-                .Spinner(Spinner.Known.Arc)
-                .StartAsync("Fetching...", async ctx =>
-                {
-                    return await _client.CreateAsync(
-                        new TemplateModel
-                        {
-                            Name = Name,
-                            Template = result.StandardOutput
-                        },
-                        context.GetCancellationToken()
-                    );
-                });
-
-            if(!created)
+            return await AnsiConsole.Status().Spinner(Spinner.Known.Arc).StartAsync("Opening editor...", async ctx =>
             {
-                AnsiConsole.MarkupLine("[red]Conflict[/]");
-                return 1;
-            }
+                var file = $"/tmp/{Guid.NewGuid()}.html";
 
-            AnsiConsole.MarkupLine("[blue]Created[/]");
-            var table = new Table();
-            table.AddColumn("Name");
-            table.AddColumn("Template");
+                await CliWrap.Cli.Wrap($"code")
+                    .WithArguments($"-n -w {file}")
+                    .ExecuteAsync(context.GetCancellationToken());
+                
+                ctx.Status("Reading template...");
+                var result = await CliWrap.Cli.Wrap($"cat")
+                    .WithArguments($"{file}")
+                    .ExecuteBufferedAsync(context.GetCancellationToken());
+                
+                ctx.Status("Creating template...");
+                var created = await _client.CreateAsync(
+                    template: new TemplateModel
+                    {
+                        Name = Name,
+                        Template = result.StandardOutput
+                    },
+                    cancellationToken: context.GetCancellationToken()
+                );
 
-            table.AddRow(Name, result.StandardOutput);
+                if (!created)
+                {
+                    AnsiConsole.MarkupLine("[red]Conflict[/]");
+                    return 1;
+                }
 
-            AnsiConsole.Write(table);
-            return 0;
+                AnsiConsole.MarkupLine("[blue]Created[/]");
+                
+                var table = new Table();
+                table.AddColumn("Name");
+                table.AddColumn("Template");
+                table.AddRow(Name, result.StandardOutput);
+                
+                AnsiConsole.Write(table);
+                return 0;
+            });
         }
     }
 }

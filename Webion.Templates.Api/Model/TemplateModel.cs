@@ -2,6 +2,6 @@ namespace Webion.Templates.Api.Model;
 
 public sealed class TemplateModel
 {
-    public string Name { get; set; } = null!;
-    public string Template { get; set; } = null!;
+    public required string Name { get; init; }
+    public required string Template { get; init; }
 }
