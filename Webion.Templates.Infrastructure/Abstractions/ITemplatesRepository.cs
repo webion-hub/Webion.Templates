@@ -4,8 +4,8 @@ namespace Webion.Templates.Infrastructure.Abstractions;
 
 public interface ITemplatesRepository
 {
-    public Task<TemplateDbo> CreateAsync(TemplateDbo template, CancellationToken cancellationToken);
+    public Task<TemplateDbo> CreateAsync(TemplateDbo template);
     public Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken);
-    public Task<bool> DeleteAsync(string name, CancellationToken cancellationToken);
-    public Task<List<string>> AllAsync(CancellationToken cancellationToken);
+    public Task<bool> DeleteAsync(string name);
+    public Task<List<string>> GetAllAsync(CancellationToken cancellationToken);
 }

@@ -8,6 +8,7 @@ using Webion.Templates.Mustache.Abstractions;
 
 namespace Kaire.Templates.Api.Controllers;
 
+[AllowAnonymous]
 [Route("templates/{Template}")]
 [ApiController]
 public class TemplateController : ControllerBase
@@ -17,7 +18,7 @@ public class TemplateController : ControllerBase
     private readonly ILogger<TemplateController> _logger;
 
     [FromRoute]
-    public string Template { get; init; } = null!;
+    public string TemplateName { get; init; } = null!;
 
     public TemplateController(ITemplatesRepository templates, ITemplateProcessService process, ILogger<TemplateController> logger)
     {
@@ -26,13 +27,12 @@ public class TemplateController : ControllerBase
         _logger = logger;
     }
 
-    [AllowAnonymous]
     [HttpGet]
     [ProducesResponseType(typeof(TemplateModel), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> FindByNameAsync(CancellationToken cancellationToken)
     {
-        var template = await _templates.FindByNameAsync(Template, cancellationToken);
+        var template = await _templates.FindByNameAsync(TemplateName, cancellationToken);
 
         if(template is null)
             return NotFound(null);
@@ -40,13 +40,12 @@ public class TemplateController : ControllerBase
         return Ok(template.ToModel());
     }
 
-    [AllowAnonymous]
     [HttpDelete]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> DeleteAsync(CancellationToken cancellationToken)
     {
-        var deleted = await _templates.DeleteAsync(Template, cancellationToken);
+        var deleted = await _templates.DeleteAsync(TemplateName);
 
         if(!deleted)
             return NotFound();
@@ -54,7 +53,6 @@ public class TemplateController : ControllerBase
         return Ok();
     }
 
-    [AllowAnonymous]
     [HttpPost]
     [ProducesResponseType(typeof(string), 200)]
     [ProducesResponseType(404)]
@@ -67,7 +65,7 @@ public class TemplateController : ControllerBase
 
         _logger.LogCritical(JsonConvert.SerializeObject(json));
 
-        var template = await _templates.FindByNameAsync(Template, cancellationToken);
+        var template = await _templates.FindByNameAsync(TemplateName, cancellationToken);
         if(template is null)
             return NotFound();
 

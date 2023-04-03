@@ -6,23 +6,17 @@ namespace Webion.Templates.Api.Mappings;
 
 public static class TemplateMapping
 {
-    public static TemplateDbo ToDbo(this TemplateModel template)
+    public static TemplateDbo ToDbo(this TemplateModel template) => new()
     {
-        return new TemplateDbo
-        {
-            Name = template.Name,
-            Template = template.Template,
-        };
-    }
+        Name = template.Name,
+        Template = template.Template,
+    };
 
-    public static TemplateModel ToModel(this TemplateDbo template)
+    public static TemplateModel ToModel(this TemplateDbo template) => new()
     {
-        return new TemplateModel
-        {
-            Name = template.Name,
-            Template = template.Template,
-        };
-    }
+        Name = template.Name,
+        Template = template.Template,
+    };
 
     public static TemplateDbo ToDbo(this TypedDocumentSnapshot<TemplateDbo> doc) => new()
     {

@@ -31,9 +31,9 @@ public class TypedCollectionReference<TDoc>
         return new (_query.Select(name), _coll);
     }
 
-    public async Task<TypedDocumentSnapshot<TDoc>> AddAsync(TDoc doc, CancellationToken cancellationToken)
+    public async Task<TypedDocumentSnapshot<TDoc>> AddAsync(TDoc doc)
     {
-        var target = await _coll.AddAsync(doc, cancellationToken);
+        var target = await _coll.AddAsync(doc);
         var snap = await target.GetSnapshotAsync();
         return snap.Of<TDoc>();
     }
@@ -42,6 +42,13 @@ public class TypedCollectionReference<TDoc>
     {
         return _query
             .StreamAsync(cancellationToken)
+            .Select(d => d.Of<TDoc>());
+    }
+
+    public IAsyncEnumerable<TypedDocumentSnapshot<TDoc>> StreamAsync()
+    {
+        return _query
+            .StreamAsync()
             .Select(d => d.Of<TDoc>());
     }
 

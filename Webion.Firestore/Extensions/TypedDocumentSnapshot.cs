@@ -18,9 +18,9 @@ public class TypedDocumentSnapshot<TDoc>
         return _doc.GetValue<TProperty>(name);
     }
 
-    public async Task<bool> DeleteAsync(CancellationToken cancellationToken)
+    public async Task<bool> DeleteAsync()
     {
-        var result = await _doc.Reference.DeleteAsync(null, cancellationToken);
+        var result = await _doc.Reference.DeleteAsync(null);
         
         return result is not null;
     }

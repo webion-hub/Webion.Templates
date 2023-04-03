@@ -14,7 +14,7 @@ internal sealed class TemplatesRepository : ITemplatesRepository
         _firestore = firestore;
     }
 
-    public async Task<List<string>> AllAsync(CancellationToken cancellationToken) 
+    public async Task<List<string>> GetAllAsync(CancellationToken cancellationToken) 
     {
         return await _firestore.Templates
             .StreamAsync(cancellationToken)
@@ -22,28 +22,32 @@ internal sealed class TemplatesRepository : ITemplatesRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<TemplateDbo> CreateAsync(TemplateDbo template, CancellationToken cancellationToken)
+    public async Task<TemplateDbo> CreateAsync(TemplateDbo template)
     {
-        var existing = await FindByNameAsync(template.Name, cancellationToken);
+        var existing = await _firestore.Templates
+            .WhereEqualTo(a => a.Name, template.Name)
+            .StreamAsync()
+            .FirstOrDefaultAsync();
+
         if(existing is not null)
             return null!;
 
-        var created = await _firestore.Templates.AddAsync(template, cancellationToken);
+        var created = await _firestore.Templates.AddAsync(template);
         
         return template;
     }
 
-    public async Task<bool> DeleteAsync(string name, CancellationToken cancellationToken)
+    public async Task<bool> DeleteAsync(string name)
     {
         var found = await _firestore.Templates
             .WhereEqualTo(a => a.Name, name)
-            .StreamAsync(cancellationToken)
-            .FirstOrDefaultAsync(cancellationToken) ?? null;
+            .StreamAsync()
+            .FirstOrDefaultAsync();
         
         if(found is null)
             return false;
         
-        return await found.DeleteAsync(cancellationToken);
+        return await found.DeleteAsync();
     }
 
     public async Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken)
@@ -51,7 +55,7 @@ internal sealed class TemplatesRepository : ITemplatesRepository
         var found = await _firestore.Templates
             .WhereEqualTo(a => a.Name, name)
             .StreamAsync(cancellationToken)
-            .FirstOrDefaultAsync(cancellationToken) ?? null;
+            .FirstOrDefaultAsync(cancellationToken);
 
         if(found is null)
             return null;
