@@ -1,4 +1,3 @@
-using Webion.Templates.Cli.Model;
 using CliWrap.Buffered;
 
 namespace Webion.Templates.Cli.Commands;

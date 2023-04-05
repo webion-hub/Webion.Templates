@@ -23,4 +23,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Webion.Templates.Http\Webion.Templates.Http.csproj" />
+  </ItemGroup>
+
 </Project>

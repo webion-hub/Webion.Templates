@@ -1,4 +1,4 @@
-namespace Webion.Templates.Cli.Options;
+namespace Webion.Templates.Http.Options;
 
 public class TemplatesOptions
 {

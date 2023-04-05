@@ -1,13 +1,12 @@
 using System.Net;
-using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
-using Webion.Templates.Cli.Abstraction;
-using Webion.Templates.Cli.Model;
-using Webion.Templates.Cli.Options;
+using Webion.Templates.Http.Abstraction;
+using Webion.Templates.Http.Model;
+using Webion.Templates.Http.Options;
 
-namespace Webion.Templates.Cli.Http;
+namespace Webion.Templates.Http.Client;
 
-public sealed class TemplatesClient : ITemplatesClient
+internal sealed class TemplatesClient : ITemplatesClient
 {
     private readonly HttpClient _client;
 

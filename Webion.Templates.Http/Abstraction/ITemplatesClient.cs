@@ -1,6 +1,6 @@
-using Webion.Templates.Cli.Model;
+using Webion.Templates.Http.Model;
 
-namespace Webion.Templates.Cli.Abstraction;
+namespace Webion.Templates.Http.Abstraction;
 
 public interface ITemplatesClient
 {

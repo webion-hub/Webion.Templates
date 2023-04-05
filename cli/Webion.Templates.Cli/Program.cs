@@ -1,29 +1,24 @@
 ﻿using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
-using Webion.Templates.Cli.Http;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Webion.Templates.Cli.Options;
 using Webion.Templates.Cli.Commands;
 using Microsoft.Extensions.Configuration;
+using Webion.Templates.Http.Extensions;
 
 var app = new CommandLineBuilder(new TemplateCommand())
     .UseHost(builder =>
     {
         builder.ConfigureAppConfiguration((context, config) =>
-        {
-            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true); 
-        });
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        );
 
         builder.ConfigureServices((ctx, services) =>
         {
-            services.Configure<TemplatesOptions>(config =>
-            {
-                config.Url = ctx.Configuration["TemplatesOptions:Url"];
-            });
-
-            services.AddHttpClient<ITemplatesClient, TemplatesClient>();
+            services.AddTemplatesClient(
+                ctx.Configuration["TemplatesOptions:Url"] 
+                    ?? throw new ArgumentNullException()
+            );
         });
 
         builder.UseCommandHandler<ListCommand, ListCommand.Handler>();
