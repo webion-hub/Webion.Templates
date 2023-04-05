@@ -9,4 +9,5 @@ public interface ITemplatesClient
     public Task<bool> CreateAsync(TemplateModel template);
     public Task<bool> RemoveAsync(string name);
     public Task<bool> UpdateAsync(string name, string value);
+    public Task<string> ProcessAsync(string name, object view, CancellationToken cancellationToken);
 }

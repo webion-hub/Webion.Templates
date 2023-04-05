@@ -9,5 +9,6 @@ public sealed class TemplateCommand : RootCommand
         AddCommand(new DeleteCommand());
         AddCommand(new AddCommand());
         AddCommand(new EditCommand());
+        AddCommand(new ProcessCommand());
     }
 }

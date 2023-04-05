@@ -26,6 +26,7 @@ var app = new CommandLineBuilder(new TemplateCommand())
         builder.UseCommandHandler<DeleteCommand, DeleteCommand.Handler>();
         builder.UseCommandHandler<AddCommand, AddCommand.Handler>();
         builder.UseCommandHandler<EditCommand, EditCommand.Handler>();
+        builder.UseCommandHandler<ProcessCommand, ProcessCommand.Handler>();
     })
     .UseDefaults()
     .Build();

@@ -50,4 +50,12 @@ internal sealed class TemplatesClient : ITemplatesClient
 
         return (response.StatusCode != HttpStatusCode.NotFound);
     }
+
+    public async Task<string> ProcessAsync(string name, object view, CancellationToken cancellationToken)
+    {
+        var response = await _client.PostAsJsonAsync($"/templates/{name}", view, cancellationToken);
+        var result = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        return result;
+    }
 }

@@ -76,8 +76,6 @@ public class TemplateController : ControllerBase
     {
         var json = JsonConvert.DeserializeObject(view);
 
-        _logger.LogCritical(JsonConvert.SerializeObject(json));
-
         var template = await _templates.FindByNameAsync(TemplateName, cancellationToken);
         if(template is null)
             return NotFound();
