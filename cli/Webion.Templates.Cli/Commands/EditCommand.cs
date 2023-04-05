@@ -35,7 +35,7 @@ internal sealed class EditCommand : InteractiveCommand
             {
                 var template = await _client.FindByNameAsync(Name, context.GetCancellationToken());
 
-                if(template?.Template is null)
+                if(template is null)
                 {
                     AnsiConsole.MarkupLine("[red]Not found[/]");
                     return 1;
@@ -58,15 +58,7 @@ internal sealed class EditCommand : InteractiveCommand
                     .WithArguments($"{file}")
                     .ExecuteBufferedAsync(context.GetCancellationToken());
 
-                await _client.RemoveAsync(Name, context.GetCancellationToken());
-                await _client.CreateAsync(
-                    new TemplateModel
-                    {
-                        Name = Name,
-                        Template = result.StandardOutput
-                    },
-                    context.GetCancellationToken()
-                );
+                await _client.UpdateAsync(template.Name, result.StandardOutput);
 
                 AnsiConsole.MarkupLine("[blue]Edited[/]");
                 return 0;

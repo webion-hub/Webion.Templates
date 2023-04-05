@@ -45,8 +45,7 @@ internal sealed class AddCommand : System.CommandLine.Command
                     {
                         Name = Name,
                         Template = result.StandardOutput
-                    },
-                    cancellationToken: context.GetCancellationToken()
+                    }
                 );
 
                 if (!created)

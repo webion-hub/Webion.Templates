@@ -21,10 +21,7 @@ public class TemplatesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(TemplateModel), 200)]
     [ProducesResponseType(400)]
-    public async Task<IActionResult> CreateAsync(
-        [FromBody] TemplateModel template,
-        CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> CreateAsync([FromBody] TemplateModel template)
     {
         var created = await _templates.CreateAsync(template.ToDbo());
 

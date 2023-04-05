@@ -28,7 +28,7 @@ internal sealed class ShowCommand : Command
             {
                 var template = await _client.FindByNameAsync(Name, context.GetCancellationToken());
                 
-                if(template?.Template is null)
+                if(template is null)
                 {
                     AnsiConsole.MarkupLine("[red]Not found[/]");
                     return 0;

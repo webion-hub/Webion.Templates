@@ -9,7 +9,7 @@ using Webion.Templates.Mustache.Abstractions;
 namespace Kaire.Templates.Api.Controllers;
 
 [AllowAnonymous]
-[Route("templates/{Template}")]
+[Route("templates/{TemplateName}")]
 [ApiController]
 public class TemplateController : ControllerBase
 {
@@ -42,12 +42,25 @@ public class TemplateController : ControllerBase
 
     [HttpDelete]
     [ProducesResponseType(200)]
-    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
     public async Task<IActionResult> DeleteAsync(CancellationToken cancellationToken)
     {
         var deleted = await _templates.DeleteAsync(TemplateName);
 
-        if(!deleted)
+        if (!deleted)
+            return NotFound();
+
+        return Ok();
+    }
+
+    [HttpPut]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> UpdateAsync([FromBody] string value, CancellationToken cancellationToken)
+    {
+        var updated = await _templates.UpdateAsync(TemplateName, value);
+
+        if (!updated)
             return NotFound();
 
         return Ok();

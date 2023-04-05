@@ -22,15 +22,15 @@ internal sealed class TemplatesRepository : ITemplatesRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<TemplateDbo> CreateAsync(TemplateDbo template)
+    public async Task<TemplateDbo?> CreateAsync(TemplateDbo template)
     {
         var existing = await _firestore.Templates
             .WhereEqualTo(a => a.Name, template.Name)
             .StreamAsync()
             .FirstOrDefaultAsync();
 
-        if(existing is not null)
-            return null!;
+        if (existing is not null)
+            return null;
 
         var created = await _firestore.Templates.AddAsync(template);
         
@@ -44,10 +44,23 @@ internal sealed class TemplatesRepository : ITemplatesRepository
             .StreamAsync()
             .FirstOrDefaultAsync();
         
-        if(found is null)
+        if (found is null)
             return false;
         
         return await found.DeleteAsync();
+    }
+
+    public async Task<bool> UpdateAsync(string name, string value)
+    {
+        var found = await _firestore.Templates
+            .WhereEqualTo(a => a.Name, name)
+            .StreamAsync()
+            .FirstOrDefaultAsync();
+        
+        if (found is null)
+            return false;
+        
+        return await found.UpdateAsync(t => t.Template, value);
     }
 
     public async Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken)
@@ -57,7 +70,7 @@ internal sealed class TemplatesRepository : ITemplatesRepository
             .StreamAsync(cancellationToken)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if(found is null)
+        if (found is null)
             return null;
 
         return found.ToDbo();

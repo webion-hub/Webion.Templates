@@ -1,7 +1,6 @@
 using System.Net;
-using System.Text;
+using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using Webion.Templates.Cli.Abstraction;
 using Webion.Templates.Cli.Model;
 using Webion.Templates.Cli.Options;
@@ -20,33 +19,36 @@ public sealed class TemplatesClient : ITemplatesClient
 
     public async Task<IEnumerable<string>> GetAllAsync(CancellationToken cancellationToken)
     {
-        var response = await _client.GetAsync($"/templates/", cancellationToken);
-        var json = await response.Content.ReadAsStringAsync(cancellationToken);
-        var templates = JsonConvert.DeserializeObject<List<string>>(json);
+        var templates = await _client.GetFromJsonAsync<List<string>>($"/templates/", cancellationToken);
 
         return templates ?? Enumerable.Empty<string>();
     }
 
     public async Task<TemplateModel?> FindByNameAsync(string name, CancellationToken cancellationToken)
     {
-        var response = await _client.GetAsync($"/templates/{name}", cancellationToken);
-        var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        var template = await _client.GetFromJsonAsync<TemplateModel?>($"/templates/{name}", cancellationToken);
 
-        return JsonConvert.DeserializeObject<TemplateModel?>(json) ?? null;
+        return template;
     }
 
-    public async Task<bool> CreateAsync(TemplateModel template, CancellationToken cancellationToken)
+    public async Task<bool> CreateAsync(TemplateModel template)
     {
-        var content = JsonConvert.SerializeObject(template);
-        var response = await _client.PostAsync($"/templates/", new StringContent(content, Encoding.UTF8, "application/json"), cancellationToken);
+        var response = await _client.PostAsJsonAsync($"/templates/", template);
 
         return(response.StatusCode != HttpStatusCode.BadRequest);
     }
 
-    public async Task<bool> RemoveAsync(string name, CancellationToken cancellationToken)
+    public async Task<bool> RemoveAsync(string name)
     {
-        var response = await _client.DeleteAsync($"/templates/{name}", cancellationToken);
+        var response = await _client.DeleteAsync($"/templates/{name}");
 
-        return(response.StatusCode != HttpStatusCode.NotFound);
+        return (response.StatusCode != HttpStatusCode.NotFound);
+    }
+
+    public async Task<bool> UpdateAsync(string name, string value)
+    {
+        var response = await _client.PutAsJsonAsync($"/templates/{name}", value);
+
+        return (response.StatusCode != HttpStatusCode.NotFound);
     }
 }

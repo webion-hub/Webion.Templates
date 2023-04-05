@@ -31,7 +31,7 @@ internal sealed class DeleteCommand : InteractiveCommand
                 
             return await AnsiConsole.Status().Spinner(Spinner.Known.Arc).StartAsync("Deleting Template...", async ctx =>
             {
-                var deleted = await _client.RemoveAsync(Name, context.GetCancellationToken());
+                var deleted = await _client.RemoveAsync(Name);
 
                 if(!deleted)
                 {

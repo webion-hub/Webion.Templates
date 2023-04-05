@@ -7,15 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Webion.Templates.Cli.Options;
 using Webion.Templates.Cli.Commands;
 using Webion.Templates.Cli.Abstraction;
+using Microsoft.Extensions.Configuration;
 
 var app = new CommandLineBuilder(new TemplateCommand())
     .UseHost(builder =>
     {
+        builder.ConfigureAppConfiguration((context, config) =>
+        {
+            config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true); 
+        });
+
         builder.ConfigureServices((ctx, services) =>
         {
             services.Configure<TemplatesOptions>(config =>
             {
-                config.Url = "https://templates-api-p6erbd2ysa-nw.a.run.app";
+                config.Url = ctx.Configuration["TemplatesOptions:Url"];
             });
 
             services.AddSingleton<TemplatesClient>();

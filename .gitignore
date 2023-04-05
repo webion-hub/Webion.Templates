@@ -5,6 +5,7 @@
 
 credentials.json
 deploy/
+appsettings.json
 
 # User-specific files
 *.rsuser
