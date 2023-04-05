@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Webion.Templates.Cli.Options;
 using Webion.Templates.Cli.Commands;
-using Webion.Templates.Cli.Abstraction;
 using Microsoft.Extensions.Configuration;
 
 var app = new CommandLineBuilder(new TemplateCommand())
@@ -24,7 +23,6 @@ var app = new CommandLineBuilder(new TemplateCommand())
                 config.Url = ctx.Configuration["TemplatesOptions:Url"];
             });
 
-            services.AddSingleton<TemplatesClient>();
             services.AddHttpClient<ITemplatesClient, TemplatesClient>();
         });
 

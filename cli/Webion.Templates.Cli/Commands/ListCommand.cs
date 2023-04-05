@@ -1,5 +1,3 @@
-using Webion.Templates.Cli.Http;
-
 namespace Webion.Templates.Cli.Commands;
 
 internal sealed class ListCommand : Command
@@ -13,9 +11,9 @@ internal sealed class ListCommand : Command
 
     public new class Handler : AsyncCommandHandler
     {
-        private readonly TemplatesClient _client;
+        private readonly ITemplatesClient _client;
 
-        public Handler(TemplatesClient client)
+        public Handler(ITemplatesClient client)
         {
             _client = client;
         }

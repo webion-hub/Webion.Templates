@@ -1,5 +1,3 @@
-using Webion.Templates.Cli.Http;
-
 namespace Webion.Templates.Cli.Commands;
 
 internal sealed class ShowCommand : Command
@@ -15,9 +13,9 @@ internal sealed class ShowCommand : Command
     public new class Handler : AsyncCommandHandler
     {
         public string Name { get; set; } = null!;
-        private readonly TemplatesClient _client;
+        private readonly ITemplatesClient _client;
 
-        public Handler(TemplatesClient client)
+        public Handler(ITemplatesClient client)
         {
             _client = client;
         }

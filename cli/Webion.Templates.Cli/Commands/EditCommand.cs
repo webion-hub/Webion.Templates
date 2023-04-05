@@ -1,5 +1,3 @@
-using Webion.Templates.Cli.Http;
-using Webion.Templates.Cli.Model;
 using CliWrap.Buffered;
 using Webion.Templates.Cli.Ui.Prompt;
 
@@ -19,9 +17,9 @@ internal sealed class EditCommand : InteractiveCommand
     {
         public string Name { get; set; } = null!;
         public bool Yes { get; set; } = false;
-        private readonly TemplatesClient _client;
+        private readonly ITemplatesClient _client;
 
-        public Handler(TemplatesClient client)
+        public Handler(ITemplatesClient client)
         {
             _client = client;
         }

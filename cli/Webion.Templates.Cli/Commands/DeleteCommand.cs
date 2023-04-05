@@ -1,4 +1,3 @@
-using Webion.Templates.Cli.Http;
 using Webion.Templates.Cli.Ui.Prompt;
 
 namespace Webion.Templates.Cli.Commands;
@@ -17,9 +16,9 @@ internal sealed class DeleteCommand : InteractiveCommand
     {
         public bool Yes { get; set; } = false;
         public string Name { get; set; } = null!;
-        private readonly TemplatesClient _client;
+        private readonly ITemplatesClient _client;
 
-        public Handler(TemplatesClient client)
+        public Handler(ITemplatesClient client)
         {
             _client = client;
         }

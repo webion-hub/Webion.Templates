@@ -1,4 +1,3 @@
-using Webion.Templates.Cli.Http;
 using Webion.Templates.Cli.Model;
 using CliWrap.Buffered;
 
@@ -17,9 +16,9 @@ internal sealed class AddCommand : System.CommandLine.Command
     public new class Handler : AsyncCommandHandler
     {
         public string Name { get; set; } = null!;
-        private readonly TemplatesClient _client;
+        private readonly ITemplatesClient _client;
 
-        public Handler(TemplatesClient client)
+        public Handler(ITemplatesClient client)
         {
             _client = client;
         }
