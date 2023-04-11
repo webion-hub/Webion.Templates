@@ -25,12 +25,15 @@ public class TypedDocumentSnapshot<TDoc>
         return result is not null;
     }
 
-    public async Task<bool> UpdateAsync<TProperty>(Expression<Func<TDoc, TProperty>> field, TProperty value)
+    public async Task<bool> UpdateAsync<TProperty>(params (Expression<Func<TDoc, TProperty>> Field, TProperty Value)[] expressions)
     {
-        var name = GetPropertyName<TDoc, TProperty>(field);
-        
         var updateDict = new Dictionary<string, object?>();
-        updateDict.Add(name, value);
+
+        foreach (var e in expressions)
+        {
+            var name = GetPropertyName<TDoc, TProperty>(e.Field);
+            updateDict.Add(name, e.Value);   
+        }
 
         var result = await _doc.Reference.UpdateAsync(updateDict);
         

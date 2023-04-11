@@ -60,7 +60,9 @@ internal sealed class TemplatesRepository : ITemplatesRepository
         if (found is null)
             return false;
         
-        return await found.UpdateAsync(t => t.Template, value);
+        return await found.UpdateAsync(
+            (t => t.Template, value)
+        );
     }
 
     public async Task<TemplateDbo?> FindByNameAsync(string name, CancellationToken cancellationToken)

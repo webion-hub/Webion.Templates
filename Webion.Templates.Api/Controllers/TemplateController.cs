@@ -56,7 +56,7 @@ public class TemplateController : ControllerBase
     [HttpPut]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
-    public async Task<IActionResult> UpdateAsync([FromBody] string value, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] string value)
     {
         var updated = await _templates.UpdateAsync(TemplateName, value);
 
