@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Firestore" Version="3.1.0" />
+    <PackageReference Include="Webion.Firestore" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Webion.Templates.Firestore\Webion.Templates.Firestore.csproj" />
-    <ProjectReference Include="..\Webion.Firestore\Webion.Firestore.csproj" />
     <ProjectReference Include="..\Webion.Templates.Core\Webion.Templates.Core.csproj" />
   </ItemGroup>
 </Project>

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Api", "Webion.Templates.Api\Webion.Templates.Api.csproj", "{88BA2BD5-DA48-4BBF-95B5-BEF144E88F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Firestore", "Webion.Firestore\Webion.Firestore.csproj", "{873AFF20-06F3-4091-A40B-19DF6A9395F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Core", "Webion.Templates.Core\Webion.Templates.Core.csproj", "{1637EA98-CCA9-4B2F-8AFE-2605F0377A68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Mustache", "Webion.Templates.Mustache\Webion.Templates.Mustache.csproj", "{586A4FA9-345F-42C3-AC14-98FB563F178E}"

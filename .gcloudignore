@@ -17,3 +17,4 @@ cli/
 node_modules
 #!include:.gitignore
 !credentials.json
+!Dockerfile
