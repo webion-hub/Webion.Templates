@@ -1,4 +1,3 @@
-using System.Net;
 using Microsoft.Extensions.Options;
 using Webion.Templates.Http.Abstraction;
 using Webion.Templates.Http.Model;
@@ -34,21 +33,21 @@ internal sealed class TemplatesClient : ITemplatesClient
     {
         var response = await _client.PostAsJsonAsync($"/templates/", template);
 
-        return(response.StatusCode != HttpStatusCode.BadRequest);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> RemoveAsync(string name)
     {
         var response = await _client.DeleteAsync($"/templates/{name}");
 
-        return (response.StatusCode != HttpStatusCode.NotFound);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> UpdateAsync(string name, string value)
     {
         var response = await _client.PutAsJsonAsync($"/templates/{name}", value);
 
-        return (response.StatusCode != HttpStatusCode.NotFound);
+        return response.IsSuccessStatusCode;
     }
 
     public async Task<string> ProcessAsync(string name, object view, CancellationToken cancellationToken)
