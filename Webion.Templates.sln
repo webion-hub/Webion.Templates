@@ -5,9 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Api", "Webion.Templates.Api\Webion.Templates.Api.csproj", "{88BA2BD5-DA48-4BBF-95B5-BEF144E88F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Firestore", "Webion.Firestore\Webion.Firestore.csproj", "{873AFF20-06F3-4091-A40B-19DF6A9395F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Core", "Webion.Templates.Core\Webion.Templates.Core.csproj", "{1637EA98-CCA9-4B2F-8AFE-2605F0377A68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Mustache", "Webion.Templates.Mustache\Webion.Templates.Mustache.csproj", "{586A4FA9-345F-42C3-AC14-98FB563F178E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webion.Templates.Http", "Webion.Templates.Http\Webion.Templates.Http.csproj", "{BCE6CEA1-1F14-4AF8-B7F1-5B4AE4117A48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,5 +40,25 @@ Global
 		{89243B62-2F79-474F-9CF0-4BD523FF2B7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89243B62-2F79-474F-9CF0-4BD523FF2B7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89243B62-2F79-474F-9CF0-4BD523FF2B7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{586A4FA9-345F-42C3-AC14-98FB563F178E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{586A4FA9-345F-42C3-AC14-98FB563F178E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{586A4FA9-345F-42C3-AC14-98FB563F178E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{586A4FA9-345F-42C3-AC14-98FB563F178E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39664D23-1286-43C1-A7AB-4F71E98F0620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39664D23-1286-43C1-A7AB-4F71E98F0620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39664D23-1286-43C1-A7AB-4F71E98F0620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39664D23-1286-43C1-A7AB-4F71E98F0620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6509526B-CACF-479B-8BC6-8BECAF84E1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6509526B-CACF-479B-8BC6-8BECAF84E1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6509526B-CACF-479B-8BC6-8BECAF84E1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6509526B-CACF-479B-8BC6-8BECAF84E1B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707E3495-4611-4120-BCC5-D197DF0152D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707E3495-4611-4120-BCC5-D197DF0152D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707E3495-4611-4120-BCC5-D197DF0152D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707E3495-4611-4120-BCC5-D197DF0152D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE6CEA1-1F14-4AF8-B7F1-5B4AE4117A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE6CEA1-1F14-4AF8-B7F1-5B4AE4117A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE6CEA1-1F14-4AF8-B7F1-5B4AE4117A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE6CEA1-1F14-4AF8-B7F1-5B4AE4117A48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

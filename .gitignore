@@ -5,6 +5,9 @@
 
 credentials.json
 deploy/
+appsettings.json
+Dockerfile
+nuget.config
 
 # User-specific files
 *.rsuser
