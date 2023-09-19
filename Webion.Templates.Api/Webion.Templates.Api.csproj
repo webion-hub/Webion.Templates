@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Webion.Templates.Firestore\Webion.Templates.Firestore.csproj" />
     <ProjectReference Include="..\Webion.Templates.Infrastructure\Webion.Templates.Infrastructure.csproj" />
+    <ProjectReference Include="..\Webion.Templates.Mustache\Webion.Templates.Mustache.csproj" />
   </ItemGroup>
 
 </Project>

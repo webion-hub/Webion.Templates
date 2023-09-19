@@ -3,6 +3,7 @@ using Kaire.Templates.Api.Extensions;
 using Webion.Templates.Infrastructure.Extensions;
 using Webion.Firestore.Extensions;
 using Webion.Templates.Firestore.Context;
+using Webion.Templates.Mustache.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -14,6 +15,7 @@ services.AddFirestore<TemplatesFirestoreDbContext>(
     false
 );
 services.AddRepositories();
+services.AddTemplateProcess();
 
 var app = builder.Build();
 
